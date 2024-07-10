@@ -14,7 +14,7 @@ from pathlib import Path
 import environ
 
 # Build environ settings
-env = environ.Env( DEBUG=(bool, False))
+env = environ.Env(DEBUG=(bool, False))
 environ.Env.read_env(env_file=".env")
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -45,6 +45,10 @@ INSTALLED_APPS = [
 
     # 3rd part
     'rest_framework',
+
+    # local
+    'apps.users.apps.UsersConfig',
+    'apps.rental_announcement.apps.RentalAnnouncementConfig',
 ]
 
 MIDDLEWARE = [
@@ -58,6 +62,8 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'stayindeutschland_project.urls'
+
+AUTH_USER_MODEL = 'users.User'
 
 TEMPLATES = [
     {
