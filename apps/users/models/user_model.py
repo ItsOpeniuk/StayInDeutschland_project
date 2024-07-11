@@ -6,6 +6,7 @@ from django.contrib.auth.base_user import AbstractBaseUser
 
 class User(AbstractBaseUser, PermissionsMixin):
 
+    username = models.CharField(unique=True, max_length=30, validators=[MinLengthValidator(2)])
     name = models.CharField(max_length=25, validators=[MinLengthValidator(2)])
     surname = models.CharField(max_length=25, validators=[MinLengthValidator(2)])
     email = models.EmailField(unique=True)
@@ -21,12 +22,13 @@ class User(AbstractBaseUser, PermissionsMixin):
     objects = UserManager()
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['name', 'surname', 'phone', 'email']
+    REQUIRED_FIELDS = ['username', 'name', 'surname', 'phone']
 
     def __str__(self):
         return self.email
 
     class Meta:
+        db_table = 'users'
         verbose_name = 'user'
         verbose_name_plural = 'users'
         ordering = ['-date_joined']

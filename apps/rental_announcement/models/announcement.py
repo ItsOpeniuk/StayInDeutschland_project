@@ -1,8 +1,8 @@
 from django.db import models
 
 from apps.rental_announcement.choices.type_of_object import HousingTypes
-from apps.rental_announcement.models.abstract_models import SoftDeleteAnnouncementModel
-
+from apps.rental_announcement.abstract_models.abstract_models import SoftDeleteAnnouncementModel
+from apps.users.models import User
 
 class AnnouncementManager(models.Manager):
 
@@ -13,7 +13,7 @@ class AnnouncementManager(models.Manager):
 class Announcement(SoftDeleteAnnouncementModel):
     title = models.CharField(max_length=50)
     description = models.TextField()
-    owner = models.ForeignKey('User', on_delete=models.CASCADE, related_name='announcements')
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='announcements')
     address = models.ForeignKey(
         'ObjectAddress',
         on_delete=models.CASCADE,

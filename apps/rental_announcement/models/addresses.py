@@ -8,3 +8,8 @@ class ObjectAddress(models.Model):
     street = models.CharField(max_length=75)
     house_number = models.CharField(max_length=5)
     postal_code = models.CharField(max_length=5)
+
+    class Meta:
+        db_table = 'addresses'
+        verbose_name = 'Address'
+        verbose_name_plural = 'Addresses'
