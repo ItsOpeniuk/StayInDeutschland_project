@@ -1,10 +1,10 @@
 from django.db import models
 
 from apps.rental_announcement.choices.booking_status import BookingStatus
-
+from apps.users.models import User
 
 class Booking(models.Model):
-    renter = models.ForeignKey('User', on_delete=models.CASCADE, related_name='bookings')
+    renter = models.ForeignKey(User, on_delete=models.CASCADE, related_name='bookings')
     announcement = models.ForeignKey('Announcement', on_delete=models.CASCADE, related_name='bookings')
     start_date = models.DateField()
     end_date = models.DateField()
