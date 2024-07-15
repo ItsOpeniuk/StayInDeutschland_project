@@ -4,6 +4,7 @@ from apps.rental_announcement.choices.type_of_object import HousingTypes
 from apps.rental_announcement.abstract_models.abstract_models import SoftDeleteAnnouncementModel
 from apps.users.models import User
 
+
 class AnnouncementManager(models.Manager):
 
     def get_queryset(self):
@@ -15,7 +16,7 @@ class Announcement(SoftDeleteAnnouncementModel):
     description = models.TextField()
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='announcements')
     address = models.ForeignKey(
-        'ObjectAddress',
+        'rental_announcement.Address',
         on_delete=models.CASCADE,
         related_name='announcements'
     )
@@ -40,4 +41,4 @@ class Announcement(SoftDeleteAnnouncementModel):
 
     @property
     def average_rate(self):
-        return self.rewiews.agregate(awg_rate=('rate'))['awg_rate'] or None
+        return self.rewiews.agregate(awg_rate='rate')['awg_rate'] or None

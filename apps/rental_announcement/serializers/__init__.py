@@ -1,0 +1,1 @@
+from apps.rental_announcement.serializers.addresses_serializers import CreateDetailAddressSerializer
