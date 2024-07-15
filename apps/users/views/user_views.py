@@ -65,7 +65,7 @@ class UserLogoutAPIView(APIView):
         )
 
 
-class UserDetailAPIView(RetrieveUpdateDestroyAPIView):
+class UserRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
 
     serializer_class = UserDetailSerializer
     permission_classes = [IsAuthenticated]
