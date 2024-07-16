@@ -6,10 +6,12 @@ from rest_framework.request import Request
 
 from apps.rental_announcement.models import Address
 from apps.rental_announcement.serializers import CreateDetailAddressSerializer
+from apps.users.permissions import IsLessorOrReadOnly
+
 
 class CreateAddressView(CreateAPIView):
     serializer_class = CreateDetailAddressSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsLessorOrReadOnly]
 
     def post(self, request: Request, *args, **kwargs) -> Response:
         user = self.request.user

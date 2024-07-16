@@ -65,16 +65,17 @@ class UserLogoutAPIView(APIView):
 
 
 class UserRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
-    permission_classes = [IsAuthenticated]
 
+    permission_classes = [IsAuthenticated, IsOwner]
+    serializer_class = UserDetailSerializer
     def get_queryset(self):
         return User.objects.filter(pk=self.request.user.pk)
 
     def get_object(self):
         return get_object_or_404(User, pk=self.request.user.pk)
 
-    def get_serializer_class(self):
-        if self.request.method in ['PUT', 'PATCH']:
-            return UserRegistrationSerializer
-        elif self.request.method == 'GET':
-            return UserDetailSerializer
+    # def get_serializer_class(self):
+    #     # if self.request.method in ['PUT', 'PATCH']:
+    #     #     return UserRegistrationSerializer
+    #     # elif self.request.method == 'GET':
+    #     #     return UserDetailSerializer
