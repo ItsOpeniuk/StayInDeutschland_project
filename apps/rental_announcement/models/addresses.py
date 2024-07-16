@@ -1,6 +1,6 @@
 from django.db import models
-
 from apps.rental_announcement.choices.federal_lands import FederalLands
+
 
 class Address(models.Model):
     federal_land = models.CharField(max_length=50, choices=FederalLands.choices())
@@ -13,6 +13,7 @@ class Address(models.Model):
         db_table = 'addresses'
         verbose_name = 'Address'
         verbose_name_plural = 'Addresses'
+        unique_together = ['federal_land', 'city', 'street', 'house_number', 'postal_code']
 
-
-
+    def __str__(self):
+        return f"{self.street}, {self.house_number}, {self.postal_code}, {self.city}"

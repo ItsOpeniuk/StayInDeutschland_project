@@ -3,7 +3,7 @@ from rest_framework import serializers
 from apps.rental_announcement.models.addresses import Address
 
 
-class CreateDetailAddressSerializer(serializers.ModelSerializer):
+class DetailAddressSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Address

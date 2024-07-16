@@ -1,28 +1,35 @@
-from rest_framework.generics import CreateAPIView
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.generics import (ListCreateAPIView,
+                                     RetrieveUpdateDestroyAPIView,
+                                     get_object_or_404
+                                     )
 from rest_framework.response import Response
-from rest_framework import status
 from rest_framework.request import Request
+from rest_framework import status
 
 from apps.rental_announcement.models import Address
-from apps.rental_announcement.serializers import CreateDetailAddressSerializer
-from apps.users.permissions import IsLessorOrReadOnly
+from apps.rental_announcement.serializers import DetailAddressSerializer
+from apps.users.permissions import IsLessor
 
 
-class CreateAddressView(CreateAPIView):
-    serializer_class = CreateDetailAddressSerializer
-    permission_classes = [IsLessorOrReadOnly]
+class AddressListView(ListCreateAPIView):
+
+    permission_classes = [IsLessor]
+    serializer_class = DetailAddressSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        if user.is_lessor:
+            return Address.objects.all()
+        return Address.objects.none()
 
     def post(self, request: Request, *args, **kwargs) -> Response:
-        user = self.request.user
-
-        if not user.is_authenticated or not user.is_lessor:
+        if not self.request.user.is_authenticated or not self.request.user.is_lessor:
             return Response(
-                {"message": "You must be logged in to create an address and should be lessor"},
+                {"message": "You must be logged in as a lessor to create an address."},
                 status=status.HTTP_403_FORBIDDEN
             )
 
-        serializer = CreateDetailAddressSerializer(data=request.data)
+        serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(
@@ -33,3 +40,13 @@ class CreateAddressView(CreateAPIView):
             serializer.errors,
             status=status.HTTP_400_BAD_REQUEST
         )
+
+
+class AddressRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
+
+    __model = Address
+    permission_classes = [IsLessor]
+    serializer_class = DetailAddressSerializer
+
+    def get_object(self):
+        return get_object_or_404(self.__model, pk=self.kwargs['pk'])
