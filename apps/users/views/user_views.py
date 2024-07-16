@@ -1,14 +1,13 @@
-from rest_framework.authentication import BasicAuthentication
 from rest_framework.response import Response
 from django.contrib.auth import login, logout, authenticate
 from rest_framework.permissions import AllowAny, IsAuthenticated
-from rest_framework.generics import (CreateAPIView, RetrieveUpdateDestroyAPIView)
+from rest_framework.generics import (CreateAPIView, RetrieveUpdateDestroyAPIView, get_object_or_404)
 from rest_framework.views import APIView
 from rest_framework import status
 
 from apps.users.models import User
 from apps.users.serializers import (UserRegistrationSerializer, UserDetailSerializer, UserLoginSerializer)
-
+from apps.users.permissions import IsOwner
 
 class UserRegistrationAPIView(CreateAPIView):
 
@@ -66,12 +65,16 @@ class UserLogoutAPIView(APIView):
 
 
 class UserRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
-
-    serializer_class = UserDetailSerializer
     permission_classes = [IsAuthenticated]
 
-    def get_object(self):
-        return self.request.user
-
     def get_queryset(self):
-        return User.objects.none()
+        return User.objects.filter(pk=self.request.user.pk)
+
+    def get_object(self):
+        return get_object_or_404(User, pk=self.request.user.pk)
+
+    def get_serializer_class(self):
+        if self.request.method in ['PUT', 'PATCH']:
+            return UserRegistrationSerializer
+        elif self.request.method == 'GET':
+            return UserDetailSerializer
