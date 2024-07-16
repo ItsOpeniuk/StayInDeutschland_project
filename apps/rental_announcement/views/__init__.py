@@ -1,1 +1,1 @@
-from apps.rental_announcement.views.addresses_view import CreateAddressView
+from apps.rental_announcement.views.addresses_view import AddressListView, AddressRetrieveUpdateDestroyAPIView
