@@ -1,0 +1,1 @@
+from apps.rental_announcement.filters.announcement_filter import AnnouncementFilter

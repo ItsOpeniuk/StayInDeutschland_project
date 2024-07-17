@@ -9,10 +9,13 @@ class Booking(models.Model):
     announcement = models.ForeignKey('Announcement', on_delete=models.CASCADE, related_name='bookings')
     start_date = models.DateField()
     end_date = models.DateField()
-    status = models.CharField(max_length=20, choices=BookingStatus.choices(), default='')
+    status = models.CharField(max_length=20, choices=BookingStatus.choices(), default=BookingStatus.PENDING.value)
+    is_approved = models.BooleanField(default=False)
+    canceled = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     deleted_at = models.DateTimeField(blank=True, null=True)
+
 
     class Meta:
         db_table = 'bookings'

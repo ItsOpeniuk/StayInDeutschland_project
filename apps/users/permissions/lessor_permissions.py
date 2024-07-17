@@ -7,9 +7,6 @@ class IsLessor(BasePermission):
 
         return request.user.is_authenticated and request.user.is_lessor
 
-    # def has_object_permission(self, request, view, obj):
-    #
-    #     if request.method in SAFE_METHODS:
-    #         return True
-    #
-    #     return obj.user == request.user
+    def has_object_permission(self, request, view, obj):
+
+        return obj.announcement.owner == request.user
