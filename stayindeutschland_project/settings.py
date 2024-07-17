@@ -45,6 +45,8 @@ INSTALLED_APPS = [
 
     # 3rd part
     'rest_framework',
+    'django_filters',
+    'drf_yasg',
 
     # local
     'apps.users.apps.UsersConfig',
@@ -58,6 +60,14 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
     ]
+}
+
+SWAGGER_SETTINGS = {
+    'SECURITY_DEFINITIONS': {
+        'BasicAuth': {
+            'type': 'basic'
+        }
+    }
 }
 
 MIDDLEWARE = [
