@@ -9,9 +9,10 @@ from apps.rental_announcement.views import (
     BookingRetrieveUpdateDestroyAPIView,
     BookingApproveAPIView,
     BookingCancelAPIView,
-    AllBookingsAPIView
+    AllBookingsAPIView,
+    ReviewListCreateAPIView,
+    ReviewRetrieveUpdateDestroyAPIView,
 )
-
 
 urlpatterns = [
     path('addresses/', AddressListView.as_view(), name='create_address'),
@@ -23,4 +24,6 @@ urlpatterns = [
     path('booking/approve/<int:pk>/', BookingApproveAPIView.as_view(), name='approve_booking'),
     path('booking/canceled/<int:pk>/', BookingCancelAPIView.as_view(), name='cancel_booking'),
     path('booking/history/', AllBookingsAPIView.as_view(), name='all_bookings'),
+    path('review/', ReviewListCreateAPIView.as_view(), name='create_review'),
+    path('review/<int:pk>/', ReviewRetrieveUpdateDestroyAPIView.as_view(), name='update_review'),
 ]

@@ -1,12 +1,10 @@
-from rest_framework.response import Response
-from rest_framework.request import Request
-from rest_framework import status
+
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, get_object_or_404
 from rest_framework.permissions import IsAuthenticated
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
 from apps.users.permissions.lessor_permissions import IsLessor
-from apps.rental_announcement.models import Announcement, Address
+from apps.rental_announcement.models import Announcement
 from apps.rental_announcement.filters import AnnouncementFilter
 from apps.rental_announcement.serializers import (AnnouncementRetrieveUpdateDestroySerializer,
                                                   AnnouncementListDetailSerializer,
@@ -45,4 +43,4 @@ class AnnouncementRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
         return Announcement.objects.none()
 
     def get_object(self):
-        return get_object_or_404(Announcement.objects.filter(owner=self.request.user), pk=self.kwargs['pk'])
+        return get_object_or_404(Announcement, pk=self.kwargs['pk'])
