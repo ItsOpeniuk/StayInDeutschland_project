@@ -13,7 +13,6 @@ from apps.rental_announcement.serializers import (AnnouncementRetrieveUpdateDest
                                                   )
 
 
-
 class AnnouncementListCreateAPIView(ListCreateAPIView):
 
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
@@ -37,9 +36,13 @@ class AnnouncementListCreateAPIView(ListCreateAPIView):
 
 class AnnouncementRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
 
-    __model = Announcement
     permission_classes = [IsAuthenticated, IsLessor]
     serializer_class = AnnouncementRetrieveUpdateDestroySerializer
 
+    def get_queryset(self):
+        if self.request.user.is_authenticated and self.request.user.is_lessor:
+            return Announcement.objects.filter(owner=self.request.user)
+        return Announcement.objects.none()
+
     def get_object(self):
-        return get_object_or_404(self.__model, pk=self.kwargs['pk'])
+        return get_object_or_404(Announcement.objects.filter(owner=self.request.user), pk=self.kwargs['pk'])

@@ -5,7 +5,7 @@ from django.utils import timezone
 class SoftDeleteAnnouncementModel(models.Model):
 
     is_deleted = models.BooleanField(default=False)
-    deleted_at = models.DateTimeField(null=True, blank=True)
+    deleted_at = models.DateTimeField(null=True, blank=True, default=None)
 
     class Meta:
         abstract = True

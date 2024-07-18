@@ -44,9 +44,9 @@ class AddressListView(ListCreateAPIView):
 
 class AddressRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
 
-    __model = Address
+    queryset = Address.objects.all()
     permission_classes = [IsLessor]
     serializer_class = DetailAddressSerializer
 
     def get_object(self):
-        return get_object_or_404(self.__model, pk=self.kwargs['pk'])
+        return get_object_or_404(Address, pk=self.kwargs['pk'])
