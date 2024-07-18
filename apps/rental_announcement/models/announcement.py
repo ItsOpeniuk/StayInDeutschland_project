@@ -5,13 +5,13 @@ from apps.rental_announcement.abstract_models.abstract_models import SoftDeleteA
 from apps.users.models import User
 
 
-class AnnouncementManager(models.Manager):
+# class AnnouncementManager(models.Manager):
+#
+#     def get_queryset(self):
+#         return super().get_queryset().filter(is_active=True, is_deleted=False)
 
-    def get_queryset(self):
-        return super().get_queryset().filter(is_active=True, is_deleted=False)
 
-
-class Announcement(SoftDeleteAnnouncementModel):
+class Announcement(models.Model):
     title = models.CharField(max_length=50)
     description = models.TextField()
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='announcements')
@@ -28,7 +28,7 @@ class Announcement(SoftDeleteAnnouncementModel):
     updated_at = models.DateTimeField(auto_now=True)
     deleted = models.BooleanField(default=False)
 
-    objects = AnnouncementManager()
+    # objects = AnnouncementManager()
 
     def __str__(self):
         return self.title
@@ -39,6 +39,7 @@ class Announcement(SoftDeleteAnnouncementModel):
         verbose_name = 'Announcement'
         verbose_name_plural = 'Announcements'
 
+
     @property
     def average_rate(self):
-        return self.rewiews.agregate(awg_rate='rate')['awg_rate'] or None
+        return self.rewiews.agregate(awg_rate='rate')['awg_rate']

@@ -1,7 +1,7 @@
-from rest_framework.permissions import BasePermission, SAFE_METHODS
+from rest_framework.permissions import BasePermission
 
 
-class IsRenterOrReadOnly(BasePermission):
+class IsRenter(BasePermission):
 
 
     def has_permission(self, request, view):
