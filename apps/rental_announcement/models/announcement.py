@@ -1,14 +1,9 @@
 from django.db import models
+from django.db.models import Avg
 
 from apps.rental_announcement.choices.type_of_object import HousingTypes
 from apps.rental_announcement.abstract_models.abstract_models import SoftDeleteAnnouncementModel
 from apps.users.models import User
-
-
-# class AnnouncementManager(models.Manager):
-#
-#     def get_queryset(self):
-#         return super().get_queryset().filter(is_active=True, is_deleted=False)
 
 
 class Announcement(models.Model):
@@ -28,8 +23,6 @@ class Announcement(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     deleted = models.BooleanField(default=False)
 
-    # objects = AnnouncementManager()
-
     def __str__(self):
         return self.title
 
@@ -39,7 +32,10 @@ class Announcement(models.Model):
         verbose_name = 'Announcement'
         verbose_name_plural = 'Announcements'
 
-
     @property
-    def average_rate(self):
-        return self.rewiews.agregate(awg_rate='rate')['awg_rate']
+    def average_rating(self):
+        reviews = self.reviews.all()
+        if reviews:
+            avg_rate = sum(review.grade for review in reviews) / len(reviews)
+            return round(avg_rate, 1)
+        return 0

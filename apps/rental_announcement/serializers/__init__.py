@@ -10,3 +10,4 @@ from apps.rental_announcement.serializers.announcement_serializers import (
     AnnouncementRetrieveUpdateDestroySerializer,
     AnnouncementListDetailSerializer,
 )
+from apps.rental_announcement.serializers.review_serializers import ReviewCreateSerializer

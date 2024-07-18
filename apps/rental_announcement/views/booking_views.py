@@ -81,11 +81,11 @@ class BookingApproveAPIView(UpdateAPIView):
 
 class BookingCancelAPIView(UpdateAPIView):
 
-    permission_classes = [IsAuthenticated | IsRenter]
+    permission_classes = [IsAuthenticated | IsRenter | IsLessor]
     serializer_class = CancelBookingSerializer
 
     def get_queryset(self):
-        if self.request.user.is_authenticated and not self.request.user.is_lessor:
+        if self.request.user.is_authenticated:
             return Booking.objects.filter(renter=self.request.user)
 
         return Booking.objects.none()
