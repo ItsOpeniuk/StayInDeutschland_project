@@ -1,8 +1,17 @@
 from django.db import models
 from apps.rental_announcement.choices.federal_lands import FederalLands
 
-
 class Address(models.Model):
+    """
+    Model representing an address.
+
+    Attributes:
+        federal_land (str): The federal state where the address is located.
+        city (str): The city of the address.
+        street (str): The street of the address.
+        house_number (str): The house number of the address.
+        postal_code (str): The postal code of the address.
+    """
     federal_land = models.CharField(max_length=50, choices=FederalLands.choices())
     city = models.CharField(max_length=50)
     street = models.CharField(max_length=75)

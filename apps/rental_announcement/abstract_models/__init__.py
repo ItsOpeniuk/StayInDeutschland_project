@@ -1,1 +1,0 @@
-from apps.rental_announcement.abstract_models.abstract_models import SoftDeleteAnnouncementModel

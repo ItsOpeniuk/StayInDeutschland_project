@@ -1,7 +1,9 @@
 from enum import Enum
 
-
 class HousingTypes(Enum):
+    """
+    Enumeration for different types of housing.
+    """
     APARTMENT = "Apartment"
     HOUSE = "House"
     ROOM = "Room"
@@ -18,5 +20,10 @@ class HousingTypes(Enum):
 
     @classmethod
     def choices(cls):
+        """
+        Provides choices for the housing types enumeration.
+
+        Returns:
+            list: A list of tuples where each tuple contains the value and the value of the housing type.
+        """
         return [(attr.value, attr.value) for attr in cls]
-    

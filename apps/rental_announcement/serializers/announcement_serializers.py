@@ -1,7 +1,6 @@
 from rest_framework import serializers
 
 from apps.rental_announcement.models import Announcement, Address
-from apps.users.models import User
 from apps.rental_announcement.serializers import DetailAddressSerializer
 from apps.rental_announcement.serializers.review_list_serializer import ReviewListSerializer
 
