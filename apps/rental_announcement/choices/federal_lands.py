@@ -1,7 +1,9 @@
 from enum import Enum
 
-
 class FederalLands(Enum):
+    """
+    Enumeration for the federal states of Germany.
+    """
     BADEN_WUERTTEMBERG = "Baden-Württemberg"
     BAYERN = "Bayern"
     BERLIN = "Berlin"
@@ -19,7 +21,12 @@ class FederalLands(Enum):
     SCHLESWIG_HOLSTEIN = "Schleswig-Holstein"
     THUERINGEN = "Thüringen"
 
-
     @classmethod
     def choices(cls):
+        """
+        Provides choices for the federal lands enumeration.
+
+        Returns:
+            list: A list of tuples where each tuple contains the value and the value of the federal land.
+        """
         return [(attr.value, attr.value) for attr in cls]
